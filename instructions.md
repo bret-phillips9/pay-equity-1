@@ -1,0 +1,2 @@
+### Instructions
+Use the Upload button to upload a CSV (comma-separated values) file into the application.  If the upload is successful, you will see additional input controls appear on the left side of the page, which you can use to to define which columns in your database correspond to the analysis variables.  Once you have defined the variables, select the specifc group of interest (e.g., female) on the last input control. Use the data preview on the right side of the page to ensure that the data appear to have been uploaded successfully.

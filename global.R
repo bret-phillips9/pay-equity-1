@@ -1,1 +1,7 @@
-
+library(shiny)
+library(bslib)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(DT)
+library(markdown)
