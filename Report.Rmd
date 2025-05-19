@@ -12,7 +12,11 @@ header-includes:
 - \newcommand{\elandscape}{\end{landscape}}
 ---
 
-This report contains two items.  First, a table is displayed that contains the following columns:
+This report contains two major sections: a t-test analysis table and a percentage disparity bar chart.
+
+### t-Test Analysis Table
+
+First, a table is displayed that contains the following columns:
 
 1. Pay Group (job title, grade, or however you group the workforce)
 1. Number of total employees in the pay group
@@ -24,7 +28,9 @@ This report contains two items.  First, a table is displayed that contains the f
 
 Note that a p-value < .05 is the generally accepted criterion for a statistically significant difference in pay.  A p-value < .05 means that there is less than a 1 in 20 chance the observed t-test value would occur if the disparity were due to chance (i.e., if the pay process was fair).
 
-Second, a bar graph is displayed that presents the average disparity as a percent of the other group's pay.  Bars on the left of graph represent disparity against the focal group, while bars on the right of the graph represent disparity against the other group. 
+### Chart of Disparity as a Percentage
+
+Second, a bar graph is displayed that presents the average disparity as a percent of the other group's pay.  This may be useful because it puts pay groups on extreme ends of the pay spectrum on a common metric.  This enables users to note whether disparity persists across the entire workforce as well.  Bars on the left side of the graph represent disparity against the focal group, while bars on the right side of the graph represent disparity against the other group. 
 
 As you play around with different focal groups, you may note that simply flipping the focal group from one group to another does not simply change the sign of the percentage, it actually changes the value also.  This is because percentages are based on the average pay of the reference (or "other") group.  So for example, if you have a workforce with two genders (men and women), and the analysis shows that women are underpaid by 10%, the application will show that men are overpaid by 11.11% when women are the focal group.
 
