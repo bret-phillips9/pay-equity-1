@@ -2469,29 +2469,41 @@
     ".RData": {
       "checksum": "de7a711913e8decfeb034956eb1f9109"
     },
+    "download.md": {
+      "checksum": "9dee4d9266ede2e11ae45ba3c22340ec"
+    },
     "global.R": {
-      "checksum": "8174286bce4f4d4f64e280b911c72120"
+      "checksum": "48e86c5e3299c8e877e26609956897ed"
     },
     "instructions.md": {
-      "checksum": "dcd5e1e63452b431ccd9194e70d28927"
+      "checksum": "5af338983f2173daf16a9e5b501ac722"
     },
     "LICENSE": {
       "checksum": "0e0619df3a08ffbb77d7e4e11a8f0d31"
     },
+    "My Pay Equity Report.pdf": {
+      "checksum": "992c3eb39a51ce840fa5fd1778b791e7"
+    },
     "notes.md": {
-      "checksum": "e876e636b3d060af2428805292129fc5"
+      "checksum": "058964ac22b67d509c575ede7fe9ebd0"
     },
     "README.md": {
       "checksum": "c243b7d3799d33c53d915d02e353d520"
     },
+    "Report.pdf": {
+      "checksum": "c12c02631e4fed12b75ccbde7c7e3030"
+    },
+    "Report.Rmd": {
+      "checksum": "620553c2007b0bb9de0c9d4437c550c4"
+    },
     "server.R": {
-      "checksum": "ccae6744870f55533479facfc4b3d644"
+      "checksum": "791039f693fe4ce46d7b6d593d6a2419"
     },
     "ui.R": {
-      "checksum": "ce03daff6587e16b2f08cc47e28178ff"
+      "checksum": "ffef4f5355aaf725de322e9b4ad30000"
     },
     "write manifest json.R": {
-      "checksum": "89bf3921488ef3cb3e7453dce19aea25"
+      "checksum": "687fab60cd7276a4eb463b9b7ace015a"
     }
   },
   "users": null

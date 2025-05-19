@@ -1,0 +1,67 @@
+---
+title: "Pay Equity Report"
+output: pdf_document
+params: 
+     table: NULL
+     graph: NULL
+     focal: NULL
+     level: NULL
+header-includes:
+- \usepackage{pdflscape}
+- \newcommand{\blandscape}{\begin{landscape}}
+- \newcommand{\elandscape}{\end{landscape}}
+---
+
+This report contains two items.  First, a table is displayed that contains the following columns:
+
+1. Pay Group (job title, grade, or however you group the workforce)
+1. Number of total employees in the pay group
+1. Number of focal group employees in the pay group
+1. Average pay of members of the focal group
+1. Average disparity - the average difference in pay between the focal group and all other employees
+1. t-Test - the statistical test for the difference in pay between focal and other groups
+1. p-value - the probability the t-Test value would be observed if the pay process was fair
+
+Note that a p-value < .05 is the generally accepted criterion for a statistically significant difference in pay.  A p-value < .05 means that there is less than a 1 in 20 chance the observed t-test value would occur if the disparity were due to chance (i.e., if the pay process was fair).
+
+Second, a bar graph is displayed that presents the average disparity as a percent of the other group's pay.  Bars on the left of graph represent disparity against the focal group, while bars on the right of the graph represent disparity against the other group. 
+
+As you play around with different focal groups, you may note that simply flipping the focal group from one group to another does not simply change the sign of the percentage, it actually changes the value also.  How much it changes depends on the size of the disparity.  This is because percentages are based on the average pay of the reference (or "other") group.
+
+\blandscape
+
+```{r data-table, echo = FALSE}
+col_names <- c(params$level, "# EEs", paste("#", params$focal), 
+               paste(params$focal, "Avg. Pay"), "Avg. Disparity", "t-Test", "p-value")
+
+disp_tbl <- kable(params$table,
+                  caption = "Pay Equity Analysis: t-Test Results by Group",
+                  digits = 3,
+                  col.names = col_names)
+disp_tbl
+```
+
+\newpage
+
+```{r result-graph, echo = FALSE}
+# for readability, set dynamic x-axis scale limits
+scale_max <- params$graph |> 
+     summarize(scale_max = max(abs(pct_underpaid))) |> 
+     mutate(scale_min = -1 * scale_max)
+
+ggplot(data = params$graph, aes(x = pct_underpaid, y = level, fill = color_group)) +
+               ggtitle("Pay Equity Analysis: % Disparity by Group") +
+               geom_bar(stat = "identity") +
+               geom_text(aes(label = paste(format(pct_underpaid, digits = 3), "%"), 
+                             hjust = hjust,
+                             fontface = "bold")) +
+               ylab(params$level) +
+               xlab(paste("%", params$focal, "Underpaid/Overpaid")) +
+               scale_x_continuous(limits = c(scale_max$scale_min, scale_max$scale_max)) +
+               geom_vline(xintercept = 0) +
+               scale_fill_manual(values = c("negative" = "palevioletred", 
+                                            "positive" = "grey50")) +
+               guides(fill = FALSE)
+```
+
+\elandscape

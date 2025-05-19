@@ -39,15 +39,30 @@ appMain <- mainPanel(
           tabPanel("Results Table",
                    h4("Pay Equity Analysis: t-Test Results by Pay Group"),
                    verbatimTextOutput("selection"),
-                   DTOutput("ladder_ui")
+                   DTOutput("DownloadTable")
           ),
           tabPanel("Results Graph",
                    h4("Pay Equity Analysis: % Disparity by Pay Group"),
                    verbatimTextOutput("selection_copy"),
-                   plotOutput("graph_ui")
+                   plotOutput("DownloadPlot")
+          ),
+          tabPanel("Download Results",
+                   fluidPage(
+                        fluidRow(
+                                 h4("Pay Equity Analysis: Generate and Download PDF Report"),
+                                 includeMarkdown("download.md")
+                        ),
+                        fluidRow(
+                             column(6, 
+                                  downloadButton(outputId = 'Report', 
+                                                 label = 'Generate and Download')
+                             )
+                        )
+                   )
           ),
           tabPanel("Notes",
-                   includeMarkdown("notes.md"))
+                   includeMarkdown("notes.md")
+          )
      )
 )
 
