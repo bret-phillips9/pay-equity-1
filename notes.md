@@ -1,6 +1,6 @@
 ### Notes on Methodology
 
-This pay equity analysis tool studies whether disparity in pay is present against a user-selected focal group.  The data you upload are assumed to be a roster or snapshot of your workforce.  At a minimum, your dataset should contain the following columns:
+This pay equity analysis tool studies whether disparity in pay is present within a point-in-time snapshot of employees against a user-selected focal group.  The data you upload are assumed to be a roster or snapshot of your workforce.  At a minimum, your dataset should contain the following columns:
 
 1. A column of pay information, whether that is base pay, total compensation, or some specific add-on pay, such as bonus.  It may be beneficial to have columns for all types of pay in your company and run a separate report for each type of pay.  Be aware that if the data contains employees who worked only part of the snapshot period, there may be a false appearance of underpaying those employees.  This is also true in the case of part-time employees.  Therefore, please ensure that the pay data are standardized to a common rate, such as hourly or annualized full-time equivalent.  
 
@@ -8,7 +8,7 @@ This pay equity analysis tool studies whether disparity in pay is present agains
 
 1. A column representing protected group status.  Generally speaking, this is race or gender, but you may want to focus on people with disabilities or veteran status also.  You will need to run separate reports for each focal group of interest.
 
-Once data are uploaded, a series of t-tests is conducted: one for every pay group (where possible), and one for the dataset overall.  A t-test value highlighted in red indicates potentially statistically significant disparity against the focal group.  A t-test value highlighted in blue indicates potentially statistically significant disparity in favor of the focal group (i.e., the focal group is actually overpaid).  Note that we say "potentially" here because if you see a red or green value, you should check the t-test's associated p-value to ensure it is _less than_ .05.  A p-value < .05 means that there is less than a 1 in 20 chance you would see the observed disparity if the pay process was fair, and is the generally accepted threshold for a statistically significant difference between groups.
+Once data are uploaded, a series of t-tests is conducted: one for every pay group (where possible), and one for the dataset overall.  A t-test value highlighted in red indicates potentially statistically significant disparity against the focal group.  A t-test value highlighted in blue indicates potentially statistically significant disparity in favor of the focal group (i.e., the focal group is actually overpaid).  Note that we say "potentially" here because if you see a red or blue value, you should check the t-test's associated p-value to ensure it is _less than_ .05.  A p-value < .05 means that there is less than a 1 in 20 chance you would see the observed disparity if the pay process was fair, and is the generally accepted threshold for a statistically significant difference between groups.
 
 The formula for the two-group t-test is available in all basic statistical textbooks.
 

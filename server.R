@@ -218,6 +218,9 @@ server <- function(input, output, session){
      output$Report <- downloadHandler(
           filename = function() { "My Pay Equity Report.pdf" },
           content = function(file) {
+               showModal(modalDialog("Downloading...", footer=NULL))
+               on.exit(removeModal())
+               
                # Render PDF from Rmd with the table as a parameter
                rmarkdown::render(
                     input = "Report.Rmd",
