@@ -55,7 +55,7 @@ server <- function(input, output, session){
      # return a preview of the upload data to user on first tab
      output$tbl_ui <- renderTable({
           req(CompData())
-          CompData()
+          head(CompData(), n = 15)
      })
      
      # below is a series of reactive data steps that will transform
@@ -115,7 +115,8 @@ server <- function(input, output, session){
                mutate(other_pay_sq = (total_pay - focal_pay)^2) |> 
                mutate(ss_other = ifelse(n_other == 0, 0, other_sum_sq - (other_pay_sq/n_other))) |> 
                mutate(var_other = ifelse(n_other == 0, 0, ss_other/n_other)) |> 
-               mutate(t_test = ifelse((n_focal == 0 | n_other == 0), 0, avg_disp/(sqrt(var_focal + var_other)))) |> 
+               # minimum size: both groups must have at least 2 people to ensure adequate df
+               mutate(t_test = ifelse((n_focal > 1 & n_other > 1), avg_disp/(sqrt(var_focal + var_other)), NA)) |> 
                mutate(t_df = n_focal + n_other - 2) |> 
                mutate(t_prob = pt(t_test, t_df)) |> 
                # pt is cumulative, so for top end subtract 1 to focus on area in tail
@@ -143,7 +144,8 @@ server <- function(input, output, session){
                mutate(n_other = n_ee - n_focal) |> 
                mutate(ss_other = ifelse(n_other == 0, 0, other_sum_sq - (other_pay_sq/n_other))) |> 
                mutate(var_other = ifelse(n_other == 0, 0, ss_other/n_other)) |> 
-               mutate(t_test = ifelse((n_focal == 0 | n_other == 0), 0,avg_disp/(sqrt(var_focal + var_other)))) |> 
+               # minimum size: here both groups must have at least 5 people to ensure adequate df
+               mutate(t_test = ifelse((n_focal > 4 & n_other > 4), avg_disp/(sqrt(var_focal + var_other)), NA)) |> 
                mutate(t_df = n_focal + n_other - 2) |> 
                mutate(t_prob = pt(t_test, t_df)) |> 
                # pt is cumulative, so for top end subtract 1 to focus on area in tail
@@ -160,7 +162,7 @@ server <- function(input, output, session){
      })
      
      # finally, return the analysis table to the Analysis Table tab
-     output$ladder_ui <- renderDT({
+     ladder_ui <- reactive({
           req(final_tbl())
           datatable(final_tbl(), 
                     colnames = c('Level', '# EEs', paste('#', input$FocalGrp), paste(input$FocalGrp, 'Avg. Pay'), 
@@ -175,6 +177,7 @@ server <- function(input, output, session){
      
      graph_tbl <- reactive({
           req(final_tbl())
+          
           final_tbl() |> 
                mutate(color_group = ifelse(avg_disp < 0, "negative", "positive")) |> 
                mutate(avg_pay_other = avg_pay_focal - avg_disp) |> 
@@ -182,7 +185,7 @@ server <- function(input, output, session){
                mutate(hjust = ifelse(pct_underpaid < 0, -0.25, 1.25))
      })
      
-     output$graph_ui <- renderPlot({
+     graph_ui <- reactive({
           req(graph_tbl())
           
           # for readability, set dynamic x-axis scale limits
@@ -191,16 +194,42 @@ server <- function(input, output, session){
                mutate(scale_min = -1 * scale_max)
           
           ggplot(data = graph_tbl(), aes(x = pct_underpaid, y = level, fill = color_group)) +
+               ggtitle("Pay Equity Analysis: % Disparity by Group") +
                geom_bar(stat = "identity") +
                geom_text(aes(label = paste(format(pct_underpaid, digits = 3), "%"), 
                              hjust = hjust,
                              fontface = "bold")) +
                ylab(input$LevelCol) +
-               xlab("% Focal Group Underpaid/Overpaid") +
+               xlab(paste("%", input$FocalGrp, "Underpaid/Overpaid")) +
                scale_x_continuous(limits = c(scale_max$scale_min, scale_max$scale_max)) +
                geom_vline(xintercept = 0) +
                scale_fill_manual(values = c("negative" = "palevioletred", "positive" = "grey50")) +
                guides(fill = FALSE)
      })
+     
+     output$DownloadTable <- renderDT({
+          print(ladder_ui())
+     })
+     
+     output$DownloadPlot <- renderPlot({
+          print(graph_ui())
+     })
+     
+     output$Report <- downloadHandler(
+          filename = function() { "My Pay Equity Report.pdf" },
+          content = function(file) {
+               # Render PDF from Rmd with the table as a parameter
+               rmarkdown::render(
+                    input = "Report.Rmd",
+                    output_file = "My Pay Equity Report.pdf",
+                    params = list(table = final_tbl(),
+                                  graph = graph_tbl(),
+                                  focal = input$FocalGrp,
+                                  level = input$LevelCol),
+                    envir = new.env(parent = globalenv())
+               )
+               file.copy("My Pay Equity Report.pdf", file)
+          }
+     )
 }
 
