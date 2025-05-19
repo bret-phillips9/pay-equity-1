@@ -26,7 +26,7 @@ Note that a p-value < .05 is the generally accepted criterion for a statisticall
 
 Second, a bar graph is displayed that presents the average disparity as a percent of the other group's pay.  Bars on the left of graph represent disparity against the focal group, while bars on the right of the graph represent disparity against the other group. 
 
-As you play around with different focal groups, you may note that simply flipping the focal group from one group to another does not simply change the sign of the percentage, it actually changes the value also.  How much it changes depends on the size of the disparity.  This is because percentages are based on the average pay of the reference (or "other") group.
+As you play around with different focal groups, you may note that simply flipping the focal group from one group to another does not simply change the sign of the percentage, it actually changes the value also.  This is because percentages are based on the average pay of the reference (or "other") group.  So for example, if you have a workforce with two genders (men and women), and the analysis shows that women are underpaid by 10%, the application will show that men are overpaid by 11.11% when women are the focal group.
 
 \blandscape
 
