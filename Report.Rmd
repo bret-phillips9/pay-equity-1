@@ -65,7 +65,7 @@ ggplot(data = params$graph, aes(x = pct_underpaid, y = level, fill = color_group
                xlab(paste("%", params$focal, "Underpaid/Overpaid")) +
                scale_x_continuous(limits = c(scale_max$scale_min, scale_max$scale_max)) +
                geom_vline(xintercept = 0) +
-               scale_fill_manual(values = c("negative" = "palevioletred", 
+               scale_fill_manual(values = c("negative" = "deepskyblue4", 
                                             "positive" = "grey50")) +
                guides(fill = FALSE)
 ```
