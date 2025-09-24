@@ -203,7 +203,7 @@ server <- function(input, output, session){
                xlab(paste("%", input$FocalGrp, "Underpaid/Overpaid")) +
                scale_x_continuous(limits = c(scale_max$scale_min, scale_max$scale_max)) +
                geom_vline(xintercept = 0) +
-               scale_fill_manual(values = c("negative" = "palevioletred", "positive" = "grey50")) +
+               scale_fill_manual(values = c("negative" = "deepskyblue4", "positive" = "grey50")) +
                guides(fill = FALSE)
      })
      
